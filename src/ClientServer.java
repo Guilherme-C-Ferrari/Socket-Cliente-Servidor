@@ -28,7 +28,7 @@ public class ClientServer {
             String ip = scanner.nextLine();
             try {
                 sckt = new Socket(ip, 4444);
-                new SocketThreadSpeaker(sckt).start();
+                new SocketThreadSpeaker(sckt).run();
             } catch (IOException e) {
                 scanner.close();
                 throw new RuntimeException(e);

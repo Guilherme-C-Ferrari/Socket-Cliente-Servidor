@@ -11,7 +11,7 @@ public class SocketThreadSpeaker extends Thread {
         this.socket = sckt;
     }
 
-    public void speaker(){
+    public void run(){
         Scanner scanner = new Scanner(System.in);
         try {
             String msg;
