@@ -16,7 +16,7 @@ public class ClientServer {
         if ((teste).equals("1")) {
             try {
                 serverSck = new ServerSocket(4444);
-                System.out.println("Vai aguardar conexao");
+                System.out.println("Aguardando conexão");
                 sckt = serverSck.accept();
                 new SocketThreadListener(sckt).start();
             } catch (IOException e) {
