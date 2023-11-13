@@ -19,6 +19,9 @@ public class ClientServer {
                 System.out.println("Aguardando conexão");
                 sckt = serverSck.accept();
                 new SocketThreadListener(sckt).start();
+                SocketThreadSpeaker speaker = new SocketThreadSpeaker(sckt);
+                speaker.start();
+                speaker.setMessage("oi");
             } catch (IOException e) {
                 scanner.close();
                 throw new RuntimeException(e);
@@ -28,7 +31,8 @@ public class ClientServer {
             String ip = scanner.nextLine();
             try {
                 sckt = new Socket(ip, 4444);
-                new SocketThreadSpeaker(sckt).run();
+                new SocketThreadSpeaker(sckt).start();
+                new SocketThreadListener(sckt).start();
             } catch (IOException e) {
                 scanner.close();
                 throw new RuntimeException(e);
@@ -36,7 +40,7 @@ public class ClientServer {
         } else if ((teste).equals("3")) {
             System.out.println("Qual o ip que deseja conectar?");
             String ip = scanner.nextLine();
-            String msg = "Hey, Guilherme";
+            String msg = "Checkin: Guilherme";
             try {
                 sckt = new Socket(ip, 4444);
                 try {
