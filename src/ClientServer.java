@@ -10,7 +10,7 @@ public class ClientServer {
     static ServerSocket serverSck;
 
     private static void run() {
-        System.out.println("Digite para 1 para criar um servidor socket e 2 para conectar em um servidor socket");
+        System.out.println("Digite:\n 1 - Criar um servidor socket\n 2 - Conectar em um servidor socket\n 3 - Conectar em um HUB Socket");
         Scanner scanner = new Scanner(System.in);
         String teste = scanner.nextLine();
         if ((teste).equals("1")) {
@@ -33,6 +33,24 @@ public class ClientServer {
                 scanner.close();
                 throw new RuntimeException(e);
             }
+        } else if ((teste).equals("3")) {
+            System.out.println("Qual o ip que deseja conectar?");
+            String ip = scanner.nextLine();
+            String msg = "Hey, Guilherme";
+            try {
+                sckt = new Socket(ip, 4444);
+                try {
+                    sckt.getOutputStream()
+                        .write((msg+"§").getBytes());
+                    sckt.getOutputStream().flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                new SocketThreadListener(sckt).start();
+            } catch (IOException e) {
+                scanner.close();
+                throw new RuntimeException(e);
+            }
         } else {
             System.out.println("Opção inválida.");
         }
@@ -41,5 +59,4 @@ public class ClientServer {
     public static void main(String[] args) {
         ClientServer.run();
     }
-
 }
